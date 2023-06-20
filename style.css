@@ -50,14 +50,22 @@ body {
 .buttons {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 5px;
+  gap: 15px;
 }
 .buttons button {
   border: none;
   box-shadow: 0 4px 30px rgba(35, 35, 35, 0.25);
   border-radius: 15px;
+  font: inherit;
+  font-size: 20px;
 }
 .coloured {
   background-color: rgb(196, 32, 208);
+}
+.double {
+  grid-column: span 2 / auto;
+}
+.triple {
+  grid-column: span 3 / auto;
 }
 

@@ -14,7 +14,7 @@ html {
 body {
   align-items: center;
   background: rgb(154,32,163);
-  background: linear-gradient(302deg, rgba(154,32,163,1) 36%, rgba(0,221,255,1) 100%);
+  background: linear-gradient(153deg, rgba(154,32,163,1) 36%, rgba(0,221,255,1) 100%); 
   display: flex;
   font-family: 'Dosis', sans-serif;
   font-size: 35px;
@@ -32,7 +32,7 @@ body {
   gap: 20px;
   background-color: rgba(255, 255, 255, 0.267);
   border-radius: 16px;
-  padding: 10px;
+  padding: 30px;
   height: 540px;
   width: 400px;
 }
@@ -51,6 +51,13 @@ body {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 5px;
+}
+.buttons button {
+  border: none;
   box-shadow: 0 4px 30px rgba(35, 35, 35, 0.25);
+  border-radius: 15px;
+}
+.coloured {
+  background-color: rgb(196, 32, 208);
 }
 

@@ -1,28 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@500&display=swap');
 
 html {
-  box-sizing: border-box;
   height: 100%;
 }
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
-  margin: 0;
-  padding: 0;
-}
+
 body {
+  display: flex;
   align-items: center;
+  justify-content: center;
   background: rgb(154,32,163);
   background: linear-gradient(153deg, rgba(154,32,163,1) 36%, rgba(0,221,255,1) 100%); 
-  display: flex;
   font-family: 'Dosis', sans-serif;
   font-size: 35px;
   font-weight: bold;
   color: #232323;
-  font-display: swap;
   height: inherit;
-  justify-content: center;
 }
 
 .container {
@@ -36,7 +28,7 @@ body {
   height: 540px;
   width: 400px;
 }
-.screen {
+#screen {
   display: flex;
   justify-content: end;
   align-items: center;
@@ -68,4 +60,3 @@ body {
 .triple {
   grid-column: span 3 / auto;
 }
-

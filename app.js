@@ -25,7 +25,27 @@ function handleNumber(value) {
         buffer += value;
     }
 }
-function handleOperator(value) {
+function handleOperator(operator) {
+    switch (operator) {
+        case "C":
+            resetCalculator();
+            break;
+        case "&larr;":
+            deleteLastDigit();
+            break;
+        case "&equals;":
+            performCalculation();
+            break;
+    }
+}
+function performCalculation() {
+}
+function resetCalculator() {
+    runningTotal = 0;
+    buffer = "0";
+    updateSreen();
+}
+function deleteLastDigit() {
 }
 function updateSreen() {
     calculatorScreen.innerText = buffer;

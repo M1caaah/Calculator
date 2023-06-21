@@ -29,10 +29,32 @@ function handleNumber(value: string):void {
   }
 }
 
-function handleOperator(value: string):void {
-  
+function handleOperator(operator: string):void {
+  switch (operator) {
+    case "C":
+      resetCalculator()
+      break;
+    case "&larr;":
+      deleteLastDigit()
+      break;
+    case "&equals;":
+      performCalculation()
+      break;
+  }
 }
 
+function performCalculation():void {
+
+}
+
+function resetCalculator():void {
+  runningTotal = 0
+  buffer = "0"
+}
+
+function deleteLastDigit():void {
+
+}
 
 function updateSreen():void {
   calculatorScreen.innerText = buffer;

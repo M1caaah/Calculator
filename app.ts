@@ -19,9 +19,13 @@ function handleClick(event: MouseEvent): void {
     handleNumber(value)
   }
   updateSreen()
+  
+  console.log(value)
 }
 
 function handleNumber(value: string):void {
+  console.log('handle number')
+
   if (buffer === "0") {
     buffer = value
   } else {
@@ -30,14 +34,16 @@ function handleNumber(value: string):void {
 }
 
 function handleOperator(operator: string):void {
+  console.log('handle operator')
+
   switch (operator) {
     case "C":
       resetCalculator()
       break;
-    case "&larr;":
+    case "←":
       deleteLastDigit()
       break;
-    case "&equals;":
+    case "=":
       performCalculation()
       break;
   }
@@ -48,14 +54,25 @@ function performCalculation():void {
 }
 
 function resetCalculator():void {
+  console.log('reset calculator')
+
   runningTotal = 0
   buffer = "0"
 }
 
 function deleteLastDigit():void {
-
+  console.log('delete last digit')  
+  
+  if(buffer.length === 1) {
+    buffer = "0"
+  } else {
+    buffer = buffer.slice(0, -1)
+  }
 }
 
 function updateSreen():void {
+  console.log('update screen')
+  
+
   calculatorScreen.innerText = buffer;
 }

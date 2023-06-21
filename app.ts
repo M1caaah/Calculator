@@ -39,18 +39,40 @@ function handleOperator(operator: string):void {
   switch (operator) {
     case "C":
       resetCalculator()
-      break;
+      break
     case "←":
       deleteLastDigit()
-      break;
+      break
     case "=":
       performCalculation()
-      break;
+      break
   }
 }
 
 function performCalculation():void {
+  console.log('calculating')
 
+  const currentNumber: number = Number(buffer)
+  switch (previousOperator) {
+    case '+':
+      runningTotal += currentNumber
+      break
+    case '-':
+      runningTotal -= currentNumber
+      break
+    case '×':
+      runningTotal *= currentNumber
+      break
+    case '÷':
+      runningTotal /= currentNumber
+      break
+    default:
+      runningTotal = currentNumber
+      break
+  }
+
+  buffer = runningTotal.toString()
+  
 }
 
 function resetCalculator():void {
@@ -73,6 +95,5 @@ function deleteLastDigit():void {
 function updateSreen():void {
   console.log('update screen')
   
-
-  calculatorScreen.innerText = buffer;
+  calculatorScreen.innerText = buffer
 }

@@ -19,7 +19,7 @@ function handleClick(event) {
     else {
         handleNumber(value);
     }
-    updateScreen();
+    updatePrimScreen();
 }
 function handleNumber(number) {
     console.log("handleNumber");
@@ -38,100 +38,57 @@ function handleOperator(operator) {
             previousOperator = "";
             break;
         case "←":
-            if (buffer.length === 1) {
-                buffer = "0";
-            }
-            else {
-                buffer = buffer.slice(0, -1);
-            }
+            deleteLastDigit();
+            break;
+        case "=":
+            calc();
+            break;
+        case "÷":
+            updateSecScreen("÷");
+            break;
+        case "×":
+            updateSecScreen("×");
+            break;
+        case "−":
+            updateSecScreen("−");
+            break;
+        case "+":
+            updateSecScreen("+");
             break;
     }
 }
-function updateScreen() {
+function deleteLastDigit() {
+    if (buffer.length === 1) {
+        buffer = "0";
+    }
+    else {
+        buffer = buffer.slice(0, -1);
+    }
+}
+function calc() {
+    switch (previousOperator) {
+        case "÷":
+            buffer = (Number(secBuffer) / Number(buffer)).toString();
+            break;
+        case "×":
+            buffer = (Number(secBuffer) * Number(buffer)).toString();
+            break;
+        case "−":
+            buffer = (Number(secBuffer) - Number(buffer)).toString();
+            break;
+        case "+":
+            buffer = (Number(secBuffer) + Number(buffer)).toString();
+            break;
+    }
+    secScreen.innerText = "";
+}
+function updateSecScreen(operator) {
+    secScreen.innerText = `${buffer} ${operator}`;
+    secBuffer = buffer;
+    buffer = "0";
+    previousOperator = operator;
+    updatePrimScreen();
+}
+function updatePrimScreen() {
     primScreen.innerHTML = buffer;
 }
-// function handleClick(event: MouseEvent): void {
-//   const clickedButton: HTMLButtonElement = event.target as HTMLButtonElement
-//   const value: string = clickedButton.innerText
-//   if (isNaN(Number(value))) {
-//     handleOperator(value)
-//   } else {
-//     handleNumber(value)
-//   }
-//   updateSreen()
-//   console.log(`Value: ${value}`)
-// }
-// function handleNumber(value: string):void {
-//   console.log('handle number')
-//   if (buffer === "0") {
-//     buffer = value
-//   } else {
-//     buffer += value
-//   }
-// }
-// function handleOperator(operator: string):void {
-//   console.log('handle operator')
-//   switch (operator) {
-//     case "C":
-//       resetCalculator()
-//       break
-//     case "←":
-//       deleteLastDigit()
-//       break
-//     case "=":
-//       performCalculation()
-//       break
-//     case "÷":
-//       previousOperator = "÷"
-//       break
-//     case "×":
-//       previousOperator = "×"
-//       break
-//     case "−": 
-//       previousOperator = "−"
-//       break
-//     case "+":
-//       previousOperator = "+"
-//       break
-//   }
-// }
-// function performCalculation():void {
-//   console.log('calculating')
-//   console.log(`previousOperator: ${previousOperator}`)
-//   const currentNumber: number = Number(buffer)
-//   switch (previousOperator) {
-//     case '+':
-//       runningTotal += currentNumber
-//       break
-//     case '-':
-//       runningTotal -= currentNumber
-//       break
-//     case '×':
-//       runningTotal *= currentNumber
-//       break
-//     case '÷':
-//       runningTotal /= currentNumber
-//       break
-//     default:
-//       runningTotal = currentNumber
-//       break
-//   }
-//   buffer = runningTotal.toString()
-// }
-// function resetCalculator():void {
-//   console.log('reset calculator')
-//   runningTotal = 0
-//   buffer = "0"
-// }
-// function deleteLastDigit():void {
-//   console.log('delete last digit')  
-//   if(buffer.length === 1) {
-//     buffer = "0"
-//   } else {
-//     buffer = buffer.slice(0, -1)
-//   }
-// }
-// function updateSreen():void {
-//   console.log('update screen')
-//   calculatorScreen.innerText = buffer
-// }

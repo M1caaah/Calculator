@@ -1,63 +1,137 @@
-var runningTotal = 0;
-var buffer = "0";
-var previousOperator;
-var calculatorScreen = document.getElementById('screen');
-var buttons = document.querySelectorAll('.calc-button');
-buttons.forEach(function (button) {
+"use strict";
+let runningTotal = 0;
+let buffer = "0";
+let secBuffer = "";
+let previousOperator;
+const primScreen = document.getElementById('prim-screen');
+const secScreen = document.getElementById('sec-screen');
+const buttons = document.querySelectorAll('.calc-button');
+buttons.forEach(button => {
     button.addEventListener('click', handleClick);
 });
 function handleClick(event) {
-    var clickedButton = event.target;
-    var value = clickedButton.innerText;
+    const currentButton = event.target;
+    const value = currentButton.innerText;
+    // console.log("clicked")
     if (isNaN(Number(value))) {
         handleOperator(value);
     }
     else {
         handleNumber(value);
     }
-    updateSreen();
-    console.log(value);
+    updateScreen();
 }
-function handleNumber(value) {
-    console.log('handle number');
+function handleNumber(number) {
+    console.log("handleNumber");
     if (buffer === "0") {
-        buffer = value;
+        buffer = number;
     }
     else {
-        buffer += value;
+        buffer += number;
     }
 }
 function handleOperator(operator) {
-    console.log('handle operator');
     switch (operator) {
         case "C":
-            resetCalculator();
+            buffer = "0";
+            runningTotal = 0;
+            previousOperator = "";
             break;
         case "←":
-            deleteLastDigit();
+            if (buffer.length === 1) {
+                buffer = "0";
+            }
+            else {
+                buffer = buffer.slice(0, -1);
+            }
             break;
-        case "=":
-            performCalculation();
-            break;
     }
 }
-function performCalculation() {
+function updateScreen() {
+    primScreen.innerHTML = buffer;
 }
-function resetCalculator() {
-    console.log('reset calculator');
-    runningTotal = 0;
-    buffer = "0";
-}
-function deleteLastDigit() {
-    console.log('delete last digit');
-    if (buffer.length === 1) {
-        buffer = "0";
-    }
-    else {
-        buffer = buffer.slice(0, -1);
-    }
-}
-function updateSreen() {
-    console.log('update screen');
-    calculatorScreen.innerText = buffer;
-}
+// function handleClick(event: MouseEvent): void {
+//   const clickedButton: HTMLButtonElement = event.target as HTMLButtonElement
+//   const value: string = clickedButton.innerText
+//   if (isNaN(Number(value))) {
+//     handleOperator(value)
+//   } else {
+//     handleNumber(value)
+//   }
+//   updateSreen()
+//   console.log(`Value: ${value}`)
+// }
+// function handleNumber(value: string):void {
+//   console.log('handle number')
+//   if (buffer === "0") {
+//     buffer = value
+//   } else {
+//     buffer += value
+//   }
+// }
+// function handleOperator(operator: string):void {
+//   console.log('handle operator')
+//   switch (operator) {
+//     case "C":
+//       resetCalculator()
+//       break
+//     case "←":
+//       deleteLastDigit()
+//       break
+//     case "=":
+//       performCalculation()
+//       break
+//     case "÷":
+//       previousOperator = "÷"
+//       break
+//     case "×":
+//       previousOperator = "×"
+//       break
+//     case "−": 
+//       previousOperator = "−"
+//       break
+//     case "+":
+//       previousOperator = "+"
+//       break
+//   }
+// }
+// function performCalculation():void {
+//   console.log('calculating')
+//   console.log(`previousOperator: ${previousOperator}`)
+//   const currentNumber: number = Number(buffer)
+//   switch (previousOperator) {
+//     case '+':
+//       runningTotal += currentNumber
+//       break
+//     case '-':
+//       runningTotal -= currentNumber
+//       break
+//     case '×':
+//       runningTotal *= currentNumber
+//       break
+//     case '÷':
+//       runningTotal /= currentNumber
+//       break
+//     default:
+//       runningTotal = currentNumber
+//       break
+//   }
+//   buffer = runningTotal.toString()
+// }
+// function resetCalculator():void {
+//   console.log('reset calculator')
+//   runningTotal = 0
+//   buffer = "0"
+// }
+// function deleteLastDigit():void {
+//   console.log('delete last digit')  
+//   if(buffer.length === 1) {
+//     buffer = "0"
+//   } else {
+//     buffer = buffer.slice(0, -1)
+//   }
+// }
+// function updateSreen():void {
+//   console.log('update screen')
+//   calculatorScreen.innerText = buffer
+// }

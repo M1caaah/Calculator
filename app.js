@@ -12,7 +12,6 @@ buttons.forEach(button => {
 function handleClick(event) {
     const currentButton = event.target;
     const value = currentButton.innerText;
-    // console.log("clicked")
     if (isNaN(Number(value))) {
         handleOperator(value);
     }
@@ -22,7 +21,6 @@ function handleClick(event) {
     updatePrimScreen();
 }
 function handleNumber(number) {
-    console.log("handleNumber");
     if (buffer === "0") {
         buffer = number;
     }
@@ -33,29 +31,27 @@ function handleNumber(number) {
 function handleOperator(operator) {
     switch (operator) {
         case "C":
-            buffer = "0";
-            runningTotal = 0;
-            previousOperator = "";
+            resetCalculator();
             break;
         case "←":
             deleteLastDigit();
             break;
         case "=":
-            calc();
+            calculate();
             break;
         case "÷":
-            updateSecScreen("÷");
-            break;
         case "×":
-            updateSecScreen("×");
-            break;
         case "−":
-            updateSecScreen("−");
-            break;
         case "+":
-            updateSecScreen("+");
+            updateSecScreen(operator);
             break;
     }
+}
+function resetCalculator() {
+    buffer = "0";
+    runningTotal = 0;
+    previousOperator = "";
+    clearSecondaryScreen();
 }
 function deleteLastDigit() {
     if (buffer.length === 1) {
@@ -65,30 +61,34 @@ function deleteLastDigit() {
         buffer = buffer.slice(0, -1);
     }
 }
-function calc() {
+function calculate() {
+    const num1 = Number(secBuffer);
+    const num2 = Number(buffer);
     switch (previousOperator) {
         case "÷":
-            buffer = (Number(secBuffer) / Number(buffer)).toString();
+            buffer = (num1 / num2).toString();
             break;
         case "×":
-            buffer = (Number(secBuffer) * Number(buffer)).toString();
+            buffer = (num1 * num2).toString();
             break;
         case "−":
-            buffer = (Number(secBuffer) - Number(buffer)).toString();
+            buffer = (num1 - num2).toString();
             break;
         case "+":
-            buffer = (Number(secBuffer) + Number(buffer)).toString();
+            buffer = (num1 + num2).toString();
             break;
     }
-    secScreen.innerText = "";
+    clearSecondaryScreen();
 }
 function updateSecScreen(operator) {
     secScreen.innerText = `${buffer} ${operator}`;
     secBuffer = buffer;
     buffer = "0";
     previousOperator = operator;
-    updatePrimScreen();
+}
+function clearSecondaryScreen() {
+    secScreen.innerText = "";
 }
 function updatePrimScreen() {
-    primScreen.innerHTML = buffer;
+    primScreen.innerText = buffer;
 }

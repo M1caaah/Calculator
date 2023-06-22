@@ -1,102 +1,104 @@
-let runningTotal: number = 0
-let buffer:string = "0"
-let secBuffer:string = ""
-let previousOperator: string
+let runningTotal: number = 0;
+let buffer: string = "0";
+let secBuffer: string = "";
+let previousOperator: string;
 
-const primScreen: HTMLDivElement = document.getElementById('prim-screen') as HTMLDivElement
-const secScreen: HTMLDivElement = document.getElementById('sec-screen') as HTMLDivElement
+const primScreen: HTMLDivElement = document.getElementById('prim-screen') as HTMLDivElement;
+const secScreen: HTMLDivElement = document.getElementById('sec-screen') as HTMLDivElement;
 
-const buttons: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.calc-button')
+const buttons: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.calc-button');
 buttons.forEach(button => {
-  button.addEventListener('click', handleClick)
-})
+  button.addEventListener('click', handleClick);
+});
 
-function handleClick(event: MouseEvent):void {
-  const currentButton:HTMLButtonElement = event.target as HTMLButtonElement
-  const value: string = currentButton.innerText
-  // console.log("clicked")
-  
+function handleClick(event: MouseEvent): void {
+  const currentButton: HTMLButtonElement = event.target as HTMLButtonElement;
+  const value: string = currentButton.innerText;
 
   if (isNaN(Number(value))) {
-    handleOperator(value)
+    handleOperator(value);
   } else {
-    handleNumber(value)
+    handleNumber(value);
   }
-  updatePrimScreen()
+  updatePrimScreen();
 }
 
-function handleNumber(number:string) {
-  console.log("handleNumber")
-
+function handleNumber(number: string): void {
   if (buffer === "0") {
-    buffer = number 
+    buffer = number;
   } else {
-    buffer += number
+    buffer += number;
   }
 }
 
-function handleOperator(operator: string):void {
+function handleOperator(operator: string): void {
   switch (operator) {
     case "C":
-      buffer = "0"
-      runningTotal = 0
-      previousOperator = ""
-      break
+      resetCalculator();
+      break;
     case "←":
-      deleteLastDigit()
-      break
+      deleteLastDigit();
+      break;
     case "=":
-      calc()
-      break
+      calculate();
+      break;
     case "÷":
-      updateSecScreen("÷")
-      break
     case "×":
-      updateSecScreen("×")
-      break
     case "−":
-      updateSecScreen("−")
-      break
     case "+":
-      updateSecScreen("+")
-      break
-    }
-}
-
-function deleteLastDigit():void {
-  if (buffer.length === 1) {
-    buffer = "0"
-  } else {
-    buffer = buffer.slice(0,-1)
+      updateSecScreen(operator);
+      break;
   }
 }
 
-function calc():void {
+function resetCalculator(): void {
+  buffer = "0";
+  runningTotal = 0;
+  previousOperator = "";
+  clearSecondaryScreen();
+}
+
+function deleteLastDigit(): void {
+  if (buffer.length === 1) {
+    buffer = "0";
+  } else {
+    buffer = buffer.slice(0, -1);
+  }
+}
+
+function calculate(): void {
+  const num1:number = Number(secBuffer);
+  const num2:number = Number(buffer);
+
   switch (previousOperator) {
     case "÷":
-      buffer = (Number(secBuffer) / Number(buffer)).toString()
-      break
+      buffer = (num1 / num2).toString();
+      break;
     case "×":
-      buffer = (Number(secBuffer) * Number(buffer)).toString()
-      break
+      buffer = (num1 * num2).toString();
+      break;
     case "−":
-      buffer = (Number(secBuffer) - Number(buffer)).toString()
-      break
+      buffer = (num1 - num2).toString();
+      break;
     case "+":
-      buffer = (Number(secBuffer) + Number(buffer)).toString()
-      break
+      buffer = (num1 + num2).toString();
+      break;
   }
-  secScreen.innerText = ""
+
+  clearSecondaryScreen();
 }
 
-function updateSecScreen(operator:string):void {
-  secScreen.innerText = `${buffer} ${operator}`
-  secBuffer = buffer
-  buffer = "0"
-  previousOperator = operator
-  updatePrimScreen()
+function updateSecScreen(operator: string): void {
+  secScreen.innerText = `${buffer} ${operator}`;
+  secBuffer = buffer;
+  buffer = "0";
+  previousOperator = operator;
 }
 
-function updatePrimScreen():void { 
-  primScreen.innerHTML = buffer
+function clearSecondaryScreen(): void {
+  secScreen.innerText = "";
+}
+
+function updatePrimScreen(): void {
+  primScreen.innerText = buffer;
 }
